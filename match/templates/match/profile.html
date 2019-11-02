@@ -1,0 +1,51 @@
+{% extends "match/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <body>
+    <article class="media content-section">
+
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'view_profile' profile.id %}">{{   profile.user.username }}</a>
+            </div>
+
+            <table>
+              <tr>
+                <td width="70%">
+                  <h2 class="article-title">{{ profile.name }}</h2>
+
+                  <p class="article-content"> {{ age }} Years</p>
+                  <p class="article-content"> {{ profile.dob }}</p>
+                  <p class="article-content"> From {{ profile.city }}</p>
+
+                  <p class="article-content"> Likes {{ profile.about }}</p>
+
+                </td>
+                <td>
+                  <img src="{{ profile.image.url }}" width = 200 height=200>
+                </td>
+              </tr>
+            </table>
+
+            {% if profile.user == user %}
+              <div>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'profileupdate' profile.id %}">Update Profile</a>
+              </div>
+            {% endif %}
+
+            <hr>
+            
+            {% if user != profile.user %}
+              {% csrf_token %}
+
+              <form action="{% url 'propose' profile.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" name="profile_id" value={{profile.id}} class="btn btn-primary">Propose {{profile.name}}</button>
+              </form>
+
+            {% endif %}
+
+          </div>
+        </article>
+    </body>
+{% endblock content %}

@@ -1,0 +1,31 @@
+{% extends "match/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <body>
+
+      <article class="media content-section">
+            <div class="media-body">
+              <div class="article-metadata">
+                <a class="mr-2" href="{% url 'profileupdate' %}">{{ user.username }}</a>
+              </div>
+              <h2 class="article-title">{{ profile.name }}</h2>
+
+              <p class="article-content"> Your proposals - <b>{{ proposals }}</b></p>
+
+              <h2> Make proposals till you find the right partner for yourself </h2>
+              <p class="article-content"> Let us begin the journey to find your partner </p>
+
+              {% if user.is_authenticated %}
+                {% csrf_token %}
+                {% if profile.user == user %}
+                  <div>
+                    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'profileupdate'  %}">Update Profile</a>
+                  </div>
+                {% endif %}
+              {% endif %}
+            </div>
+          </article>
+
+
+  </body>
+{% endblock content %}

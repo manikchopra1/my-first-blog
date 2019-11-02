@@ -1,0 +1,55 @@
+{% extends "match/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <body>
+
+    <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'view_profile' proposal.user.profile.id %}">{{ proposal.user.username }}</a>
+            </div>
+
+          <table cellspacing="10">
+            <tr>
+              <td width="71%">
+                <div>
+                  <h2 class="article-title">{{ proposal.user.profile.name }}</h2>
+
+                  <p class="article-content"> From {{ proposal.user.profile.city }} </p>
+                  <p class="article-content"> Likes {{ proposal.user.profile.about }}</p>
+              <td>
+                <img src="{{ proposal.user.profile.image.url }}" width = 200 height=200>
+              </td>
+            </tr>
+          </table>
+
+          <div>
+            <hr>
+            <p class="article-content"> <b>{{ proposal.user.profile.name }} </b> has this message for you!!</p>
+            <p class="article-content"> <i>" {{ proposal.message }} "</i></p>
+          </div>
+
+           <div >
+             <table cellpadding=10>
+               <tr cellpadding=10>
+                 <td >
+                   <form action="{% url 'decline_proposal' proposal.id %}" method="post">
+                     {% csrf_token %}
+                     <button type="submit" name="proposal_id" value={{proposal.id}} class="btn btn-danger">Decline Proposal</button>
+                   </form>
+                 </td>
+                 <td>
+                   <form action="{% url 'accept_proposal' proposal.id %}" method="post">
+                     {% csrf_token %}
+                     <button type="submit" name="proposal_id" value={{proposal.id}} class="btn btn-primary">Accept the Proposal from {{ proposal.user.profile.name }} </button>
+                   </form>
+                 </td>
+               </tr>
+             </table>
+           </div>
+
+
+          </div>
+        </article>
+    </body>
+{% endblock content %}

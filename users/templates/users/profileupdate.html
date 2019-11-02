@@ -1,0 +1,20 @@
+{% extends "match/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+  <body>
+    <div class="content-section", enctype="multipart/form-data">
+      <h1>{{user.username}}</h1>
+      <h2>{{user.email}}
+    </div>
+    <form method="POST">
+      {% csrf_token %}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4"> Profile Info</legend>
+        {{ form|crispy }}
+      </fieldset>
+      <div class="form-group">
+        <button class="btn btn-outline-info" type="submit">Update</button>
+      </div>
+    </form>
+  </body>
+{% endblock content %}
